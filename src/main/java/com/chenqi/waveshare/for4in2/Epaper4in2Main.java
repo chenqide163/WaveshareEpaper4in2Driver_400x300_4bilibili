@@ -1,18 +1,21 @@
 package com.chenqi.waveshare.for4in2;
 
+import org.apache.log4j.Logger;
+
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class Epaper4in2Main {
+    private static Logger LOG = Logger.getLogger(Epaper4in2Main.class);
     public static void main(String[] args) throws IOException, InterruptedException {
+        LOG.debug("Start to run main");
         WaveshareEpaper4in2Driver.getInstance().init();
         WaveshareEpaper4in2Driver.getInstance().clear();
         WaveshareEpaper4in2Driver.getInstance().display(DrawImg.getWeatherImg());
         Thread.sleep(2000);
-        //showPicsFromSameFolder();
+        showPicsFromSameFolder();
     }
 
     /**

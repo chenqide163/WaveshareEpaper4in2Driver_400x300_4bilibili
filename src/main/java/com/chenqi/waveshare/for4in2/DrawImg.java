@@ -31,7 +31,8 @@ public class DrawImg {
      * @return
      * @throws IOException
      */
-    public static BufferedImage getFloydSteinbergBinImg(Image srcImage) throws IOException {
+    public static BufferedImage getFloydSteinbergBinImg(Image srcImage) {
+        LOG.debug("start to run getFloydSteinbergBinImg");
         int width = WaveshareEpaper4in2Driver.WIDTH;
         int height = WaveshareEpaper4in2Driver.HEIGHT;
 
@@ -101,7 +102,7 @@ public class DrawImg {
      * @throws IOException
      */
     public static BufferedImage getWeatherImg() throws IOException {
-        LOG.debug("start to getFutureWeatherImg ");
+        LOG.debug("start to getWeatherImg ");
         int width = WaveshareEpaper4in2Driver.WIDTH;
         int height = WaveshareEpaper4in2Driver.HEIGHT;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY);

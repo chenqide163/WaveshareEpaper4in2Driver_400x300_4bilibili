@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.*;
 import com.pi4j.io.spi.SpiChannel;
 import com.pi4j.io.spi.SpiDevice;
 import com.pi4j.io.spi.SpiFactory;
+import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +12,7 @@ import java.awt.image.DataBufferByte;
 import java.io.IOException;
 
 public class WaveshareEpaper4in2Driver {
-
+    private static Logger LOG = Logger.getLogger(WaveshareEpaper4in2Driver.class);
     public final static int WIDTH = 400;
     public final static int HEIGHT = 300;
 
@@ -58,7 +59,7 @@ public class WaveshareEpaper4in2Driver {
      * @throws InterruptedException
      */
     private void reset() throws InterruptedException {
-        System.out.println("reset spi");
+        LOG.debug("reset spi");
         RST.high();
         Thread.sleep(200);
         RST.low();
@@ -96,7 +97,7 @@ public class WaveshareEpaper4in2Driver {
      * @throws InterruptedException
      */
     private void readBusy() throws IOException, InterruptedException {
-        System.out.println("readBusy spi");
+        LOG.debug("readBusy spi");
         sendCommand((byte) 0x71);
         while (BUSY.isLow()) {
             sendCommand((byte) 0x71);
@@ -113,7 +114,7 @@ public class WaveshareEpaper4in2Driver {
      * @throws InterruptedException
      */
     public void init() throws IOException, InterruptedException {
-        System.out.println("init spi");
+        LOG.debug("init spi");
         reset();
 
         sendCommand(0x01); //Power Setting
@@ -194,7 +195,7 @@ public class WaveshareEpaper4in2Driver {
      * @throws InterruptedException
      */
     public void display(Image srcImg) throws IOException, InterruptedException {
-        System.out.println("just display.no gray.");
+        LOG.debug("just display.no gray.");
         BufferedImage bufferedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_BYTE_BINARY);
         Graphics graphics = bufferedImage.getGraphics();
 
@@ -227,7 +228,7 @@ public class WaveshareEpaper4in2Driver {
      */
     public void display2(BufferedImage destImg) throws IOException, InterruptedException {
         final byte[] pixels = ((DataBufferByte) destImg.getRaster().getDataBuffer()).getData();
-        System.out.println(" pixels size = " + pixels.length);
+        LOG.debug(" pixels size = " + pixels.length);
         //sendCommand(0x92);
         setLut();
         sendCommand(0x10);
